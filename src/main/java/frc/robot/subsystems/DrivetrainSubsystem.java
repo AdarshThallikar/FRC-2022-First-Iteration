@@ -41,9 +41,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MaxSpeedMetersPerSecond = 6380.0 / 60.0 *
+  public static final double MaxSpeedMetersPerSecond = (6380.0 / 60.0 *
           SdsModuleConfigurations.MK4_L2.getDriveReduction() *
-          SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI;
+          SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI);
 
   // need measure on robot
   public static final double MaxAccelerationMetersPerSecondSquared = 10; 
@@ -179,10 +179,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SwerveModuleState[] states = DriveConstants.kDriveKinematics.toSwerveModuleStates(m_chassisSpeeds);
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MaxSpeedMetersPerSecond);
 
-    m_frontLeftModule.set(states[0].speedMetersPerSecond / MaxSpeedMetersPerSecond * MAX_VOLTAGE, states[0].angle.getRadians());
-    m_frontRightModule.set(states[1].speedMetersPerSecond / MaxSpeedMetersPerSecond * MAX_VOLTAGE, states[1].angle.getRadians());
-    m_backLeftModule.set(states[2].speedMetersPerSecond / MaxSpeedMetersPerSecond * MAX_VOLTAGE, states[2].angle.getRadians());
-    m_backRightModule.set(states[3].speedMetersPerSecond / MaxSpeedMetersPerSecond * MAX_VOLTAGE, states[3].angle.getRadians());
+    m_frontLeftModule.set(states[0].speedMetersPerSecond / (MaxSpeedMetersPerSecond * 1.5) * MAX_VOLTAGE, states[0].angle.getRadians());
+    m_frontRightModule.set(states[1].speedMetersPerSecond / (MaxSpeedMetersPerSecond * 1.5) * MAX_VOLTAGE, states[1].angle.getRadians());
+    m_backLeftModule.set(states[2].speedMetersPerSecond /  (MaxSpeedMetersPerSecond * 1.5) * MAX_VOLTAGE, states[2].angle.getRadians());
+    m_backRightModule.set(states[3].speedMetersPerSecond /  (MaxSpeedMetersPerSecond * 1.5) * MAX_VOLTAGE, states[3].angle.getRadians());
 
     m_odometry.update(getGyroscopeRotation(), 
         new SwerveModuleState(m_frontLeftModule.getDriveVelocity(), new Rotation2d(m_frontLeftModule.getSteerAngle())),
